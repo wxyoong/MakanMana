@@ -57,7 +57,9 @@ class User(AbstractBaseUser, PermissionsMixin):
         ext = filename.split('.')[-1]
         filename = "%s.%s" % (shortuuid.uuid(), ext)
         return os.path.join('user_uploads/', filename)
-
+    
+class Preference(models.Model):
+    tag = models.CharField(max_length=20, blank=True)
 
 class Profile(models.Model):
     """
@@ -72,7 +74,7 @@ class Profile(models.Model):
     status = models.TextField(blank=True)
     recent_location_X = models.CharField(max_length=15, blank=True)
     recent_location_Y = models.CharField(max_length=15, blank=True)
-
+    user_preference = models.ForeignKey(Preference, on_delete=models.CASCADE)
     def create_profile(self, user, profile_pic):
         pass
     def __str__(self):
@@ -88,3 +90,4 @@ class FriendList(models.Model):
     friend_list = models.ManyToManyField(User)
     def __str__(self):
         return str(self.current_user)
+
