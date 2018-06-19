@@ -1,0 +1,11 @@
+{
+  "expo": {
+    "sdkVersion": "27.0.0"
+  } ,
+
+   "android" :{
+     "config" : {
+       "googleMaps" : { "apiKey" : "AIzaSyA5Wh0i7U7fsLkCG0FWXZr2X6yqegppIcM"}
+     }
+  }
+}
