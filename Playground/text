@@ -1,0 +1,47 @@
+// class Greeting extends React.Component{
+//   render(){
+//     return(
+//       <Text>Hello {this.props.name}!</Text>
+//     )
+//   }
+// }
+//
+// export default class LotsOfGreetings extends React.Component{
+//   render(){
+//     return(
+//       <View style = {styles.container}>
+//         <Greeting name='Vincent'/>
+//         <Greeting name='Kent'/>
+//       </View>
+//     )
+//   }
+// }
+
+// class Blink extends React.Component{
+//   constructor(props){
+//     super(props);
+//     this.state={isShowingText:true};
+//
+//     //toggle state every seconds
+//     setInterval( ()=>{
+//       this.setState(previousState=>{
+//           return{ isShowingText: !previousState.isShowingText }
+//       })
+//     },1000)
+//   }
+//     render(){
+//       let display=this.state.isShowingText ? this.props.text:'';
+//       return(
+//         <Text>{display}</Text>
+//       )
+//     }
+// }
+// export default class BlinkApp extends React.Component{
+//   render(){
+//     return(
+//       <View style={styles.container}>
+//         <Blink text='I love to blink'/>
+//       </View>
+//     )
+//   }
+// }
