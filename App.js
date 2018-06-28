@@ -1,75 +1,79 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, TextInput, View, Image, Button,TouchableOpacity, KeyboardAvoidingView } from 'react-native';
+import { StyleSheet, Text, View, Image, ActivityIndicator } from 'react-native';
 import { createStackNavigator } from 'react-navigation';
 
-import Icon1 from './Asset/Img/Octocat.png'
-import RegisterForm from './Components/RegisterForm.js'
+import Icon1 from './Asset/Img/IronOcto.png';
+import LoginForm from './Components/LoginForm.js';
+import RegisterForm from './Components/RegisterForm.js';
+
+import { Provider } from 'mobx-react';
+import mobxstores from './mobxstores';
 
 class App extends Component{
-  constructor(props){
-    super(props);
+  constructor() {
+    super();
     this.state = {
-        username: '',
-        password: '',
+        showME: true,
     }
   }
+  componentWillMount() {
+    setTimeout(() => { 
+        this.setState({showME: false}) 
+    }, 1000)
+  }
   _createAccount = () => {
-   this.props.navigation.navigate('createAccount');
+    this.props.navigation.navigate('createAccount');
+  }
+  _back = () => {
+    this.props.navigation.goBack(null);
   }
   render(){
     return(
-      <View style={styles.container}>
-        <View style={styles.logoContainer}>
-          <Image style={styles.logo} 
-            source={Icon1}
-          />
-          <Text style={styles.titleText}>
-            No hunger, no trouble with
-          </Text>
-          <Text style={styles.title}>
-            MakanMana
-          </Text>
+      <Provider {...mobxstores}>
+        <View style={styles.containerLoader}>
+          {this.state.showME ?
+            <ActivityIndicator size='large' color='#ff0000' />
+            :
+            <View style={styles.container}>
+              <View style={styles.logoContainer}>
+                <Image style={styles.logo} source={Icon1} />
+                <Text style={styles.titleText}> No hunger, no trouble with </Text>
+                <Text style={styles.title}> MakanMana </Text>
+              </View>
+              <LoginForm create_Account={this._createAccount} />
+            </View>
+          }
         </View>
-        <KeyboardAvoidingView style={styles.container1} behavior='padding' >
-          <TextInput style={styles.input}
-            placeholder = 'username'
-            placeholderTextColor = 'rgba(128,0,128,0.5)'
-            returnKeyType = 'next'
-            onChangeText={ (x)=>this.setState({username:x}) }
-          />
-          <TextInput style={styles.input}
-            placeholder = 'password'
-            placeholderTextColor = 'rgba(128,0,128,0.5)'
-            returnKeyType = 'go'
-            onChangeText={ (x)=>this.setState({password:x}) }
-          />
-          <TouchableOpacity style={styles.buttonLogin}>
-            <Text style={styles.buttonText}>
-              LOGIN
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.buttonRegister} onPress={this._createAccount}>
-            <Text style={styles.buttonText}>
-              Create Account
-            </Text>
-          </TouchableOpacity>
-        </KeyboardAvoidingView>
-      </View>
+      </Provider>
     )
   }
 }
 class CreateAccount extends Component{
   render(){
     return(
-      <RegisterForm />
+      <Provider {...mobxstores}>
+        <RegisterForm />
+      </Provider>
     )
   }
 }
+
 export default createStackNavigator({
-  Main: {screen: App, navigationOptions: {header: null,}},
-  createAccount: {screen: CreateAccount, navigationOptions: {header: null,}},
+  Main: { 
+    screen: App, 
+    navigationOptions: {header: null} 
+  },
+  createAccount: {
+    screen: CreateAccount, 
+  },
 })
+
 const styles = StyleSheet.create({
+  containerLoader: {
+    flex: 1,
+    justifyContent: 'center',
+    backgroundColor: '#ffffff',
+  },
   container: {
     flex: 1,
     backgroundColor: '#3498db',
@@ -105,34 +109,6 @@ const styles = StyleSheet.create({
     // background: 'transparent',
     // marginTop: '20',
   },
-  row: {
-    flexDirection: 'row',
-    paddingTop: 40,
-  },
-  container1: {
-    padding: 20,
-  },
-  input: {
-      height: 40,
-      backgroundColor: 'rgba(255,255,255,0.2)',
-      marginBottom: 20,
-      color: '#34576d',
-      paddingHorizontal: 10,
-  },
-  buttonLogin: {
-      backgroundColor: '#2980b9',
-      paddingVertical: 15,
-      marginBottom: 15,
-  },
-  buttonRegister: {
-      backgroundColor: '#2980b9',
-      paddingVertical: 15,
-      marginBottom: 40,
-  },
-  buttonText: {
-      color: '#FFF',
-      textAlign: 'center',
-  }
 });
 
 
