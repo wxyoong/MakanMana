@@ -28,7 +28,7 @@ class LoginForm extends Component{
                     placeholderTextColor = 'rgba(255,255,255,0.5)'
                     secureKeyEntry
                     returnKeyType = 'go'
-                    onChangeText={ (x)=>this.setState({password:x}) }
+                    onChangeText={ (y)=>this.setState({password:y}) }
                 />
                 <TouchableOpacity style={styles.buttonLogin}>
                     <Text style={styles.buttonText}>LOGIN</Text>

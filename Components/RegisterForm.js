@@ -1,21 +1,18 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, TextInput, Text, KeyboardAvoidingView, TouchableOpacity } from 'react-native';
 import { inject, observer } from 'mobx-react';
-import { createStackNavigator } from 'react-navigation';
-//import ProfileForm from './ProfileForm.js'
-
+import ProfileForm from './ProfileForm.js'
+import { Provider } from 'mobx-react'
+import mobxstores from '../mobxstores';
 class RegisterForm extends Component{
     constructor(props){
         super(props);
         this.state = {
             email: '',
-            password1 : '',
+            password: '',
             confirm_password: '',
             phone_no: '',
         }
-    }
-    _createProfile = () => {
-        this.props.navigation.navigate('createProfile');
     }
     render(){
         return(
@@ -59,7 +56,8 @@ class RegisterForm extends Component{
                     />
                 </KeyboardAvoidingView>
                 <View style={{paddingStart: 80, paddingEnd: 80}}>
-                    <TouchableOpacity style={styles.buttonContainer} onPress={this._createProfile}>
+                    <TouchableOpacity style={styles.buttonContainer}
+                        onPress={ ()=>{this.props.create('createProfile')} }>
                         <Text style={styles.buttonText}> Submit </Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.buttonContainer}>
@@ -71,24 +69,22 @@ class RegisterForm extends Component{
     }
 }
 RegisterForm = inject('x')(observer(RegisterForm))
-export default RegisterForm;
-// class CreateProfile extends Component{
-//     render(){
-//         return(
-//             <ProfileForm />
-//         )
-//     }
-// }
-// const CreateAccount = createStackNavigator({
-//     createProfile: {
-//       screen: CreateProfile,
-//     }
-// })
-// export default createStackNavigator({
-//     createProfile: {
-//         screen: CreateProfile,
-//     },
-// })
+export class Hello extends Component{
+    render(){
+        return(
+            <Provider {...mobxstores}>
+                <RegisterForm  create = {this.props.create}/>
+            </Provider>
+        )
+    }
+}
+export class CreateProfile extends Component{
+    render(){
+        return(
+            <ProfileForm />
+        )
+    }
+}
 
 const styles = StyleSheet.create({
     container: {
@@ -120,31 +116,4 @@ const styles = StyleSheet.create({
     },
 });
 
-//<View style={styles.row}>
-//<Text style={{flex:1, fontSize:20}}>
-//    Username :
-//</Text>
-//<TextInput 
-//    style={{flex:2, fontSize:20}}
-//    placeholder = 'Insert username'
-//    value = {this.state.a}
-//    onChangeText = { (x)=>this.setState({a:x}) }
-///>
-//</View>
 
-
-
-
-//     <View style = {styles.row}>
-// <Text style = {{flex: 1, fontSize: 20}}>
-//     Password :
-// </Text>
-// <TextInput style = {{flex:2, fontSize:20}}
-//     placeholder =  'Insert password'
-//     value = {this.state.password}
-//     onChangeText={ (x) => this.setState({password:x}) }
-// />
-// </View>
-// <View style = {{paddingTop: 40}}>
-// <Button onPress={this.createAccount} title='Create account'/>
-// </View>

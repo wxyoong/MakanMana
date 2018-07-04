@@ -4,7 +4,7 @@ import { createStackNavigator } from 'react-navigation';
 
 import Icon1 from './Asset/Img/IronOcto.png';
 import LoginForm from './Components/LoginForm.js';
-import RegisterForm from './Components/RegisterForm.js';
+import { Hello, CreateProfile }from './Components/RegisterForm.js';
 
 import { Provider } from 'mobx-react';
 import mobxstores from './mobxstores';
@@ -52,7 +52,7 @@ class CreateAccount extends Component{
   render(){
     return(
       <Provider {...mobxstores}>
-        <RegisterForm />
+        <Hello create={this.props.navigation.navigate} />
       </Provider>
     )
   }
@@ -61,12 +61,24 @@ class CreateAccount extends Component{
 export default createStackNavigator({
   Main: { 
     screen: App, 
-    navigationOptions: {header: null} 
+    navigationOptions: {header: null}, 
   },
   createAccount: {
     screen: CreateAccount, 
   },
+  registerForm: {
+    screen: createStackNavigator({
+      Main1: {
+        screen: Hello,
+        navigationOptions: {header: null},
+      },
+      createProfile: {
+          screen: CreateProfile,
+      },
+    })
+  },
 })
+
 
 const styles = StyleSheet.create({
   containerLoader: {
